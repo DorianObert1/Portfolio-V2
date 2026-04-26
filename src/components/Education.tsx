@@ -4,6 +4,7 @@ import { GraduationCap, Award, BookOpen } from 'lucide-react'
 import { ScrollReveal } from './ui/ScrollReveal'
 import { SectionTitle } from './ui/SectionTitle'
 import { portfolioData } from '../data/portfolio'
+import { useIsMobile } from '../hooks/useIsMobile'
 import type { Education as EduType } from '../data/portfolio'
 
 const ACCENTS = ['#6366f1', '#06b6d4', '#8b5cf6']
@@ -19,6 +20,7 @@ function EduCard({ edu, i }: { edu: EduType; i: number }) {
   const { level, Icon } = EDU_META[i]
   const startYear = edu.period.split('—')[0].trim()
   const endYear   = edu.period.split('—')[1]?.trim() ?? ''
+  const isMobile = useIsMobile()
 
   const mouseX = useMotionValue(0)
   const mouseY = useMotionValue(0)
@@ -27,9 +29,9 @@ function EduCard({ edu, i }: { edu: EduType; i: number }) {
   const rotateY = useSpring(useTransform(mouseX, [-0.5, 0.5], [-9, 9]), spring)
 
   const [spot, setSpot] = useState({ x: 50, y: 50, on: false })
-  const [scanPos, setScanPos] = useState(0)
 
   const handleMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (isMobile) return
     const rect = e.currentTarget.getBoundingClientRect()
     const px   = (e.clientX - rect.left) / rect.width  - 0.5
     const py   = (e.clientY - rect.top)  / rect.height - 0.5
@@ -48,9 +50,9 @@ function EduCard({ edu, i }: { edu: EduType; i: number }) {
 
   return (
     <ScrollReveal delay={i * 0.13}>
-      <div style={{ perspective: '900px' }} className="h-full">
+      <div style={{ perspective: isMobile ? undefined : '900px' }} className="h-full">
         <motion.article
-          style={{ rotateX, rotateY }}
+          style={{ rotateX: isMobile ? 0 : rotateX, rotateY: isMobile ? 0 : rotateY }}
           onMouseMove={handleMove}
           onMouseLeave={handleLeave}
           className="relative flex flex-col h-full rounded-2xl overflow-hidden cursor-default select-none"

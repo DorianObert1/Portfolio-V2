@@ -219,16 +219,16 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
             </div>
 
             {/* ── Body ── */}
-            <div className="flex flex-col md:flex-row flex-1 min-h-0">
+            <div className="flex flex-col md:flex-row flex-1 min-h-0 overflow-hidden">
 
-              {/* Left — image gallery (dominant) */}
-              <div className="flex-1 min-w-0 p-5 overflow-y-auto">
+              {/* Left — image gallery : hauteur fixe sur mobile pour rester visible */}
+              <div className="h-[42vh] shrink-0 md:h-auto md:flex-1 md:min-w-0 p-4 md:p-5 overflow-y-auto">
                 <ImageGallery images={project.images} accent={project.accentColor} />
               </div>
 
               {/* Right — project details */}
               <div
-                className="md:w-80 lg:w-96 shrink-0 flex flex-col overflow-y-auto border-t md:border-t-0 md:border-l"
+                className="flex-1 md:flex-none md:w-80 lg:w-96 flex flex-col overflow-y-auto border-t md:border-t-0 md:border-l"
                 style={{ borderColor: `${project.accentColor}12` }}
               >
                 <div className="p-6 flex flex-col gap-6">

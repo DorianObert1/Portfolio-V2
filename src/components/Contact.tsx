@@ -43,7 +43,7 @@ export function Contact() {
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.97 }}
               transition={{ duration: 0.2 }}
-              className="inline-flex items-center gap-3 px-8 py-4 rounded-2xl bg-indigo-500 hover:bg-indigo-400 text-white text-lg font-semibold transition-colors duration-200 hover:shadow-2xl hover:shadow-indigo-500/30 mb-12"
+              className="inline-flex items-center gap-2 px-5 py-3.5 md:px-8 md:py-4 rounded-2xl bg-indigo-500 hover:bg-indigo-400 text-white text-sm md:text-lg font-semibold transition-colors duration-200 hover:shadow-2xl hover:shadow-indigo-500/30 mb-12 max-w-full"
             >
               <Mail size={20} aria-hidden="true" />
               {personal.email}

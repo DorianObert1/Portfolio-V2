@@ -2,6 +2,7 @@ import { useRef } from 'react'
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion'
 import { Github, Linkedin, Mail, ArrowDown, Download } from 'lucide-react'
 import { useTypewriter } from '../hooks/useTypewriter'
+import { useIsMobile } from '../hooks/useIsMobile'
 import { MagneticWrapper } from './ui/MagneticWrapper'
 import { portfolioData } from '../data/portfolio'
 
@@ -21,6 +22,7 @@ const ORBS = [
 export function Hero() {
   const animatedRole = useTypewriter(portfolioData.personal.animatedRoles, 80, 45, 2400)
   const sectionRef = useRef<HTMLElement>(null)
+  const isMobile = useIsMobile()
 
   const rawX = useMotionValue(0)
   const rawY = useMotionValue(0)
@@ -52,7 +54,7 @@ export function Hero() {
       {/* Grid */}
       <div className="absolute inset-0 bg-zinc-950 hero-grid" />
 
-      {/* Animated orbs */}
+      {/* Animated orbs — static on mobile (blur+animation are GPU-heavy) */}
       {ORBS.map((orb, i) => (
         <motion.div
           key={i}
@@ -63,13 +65,13 @@ export function Hero() {
             left: orb.x,
             top: orb.y,
             background: `radial-gradient(circle, ${orb.color} 0%, transparent 70%)`,
-            filter: 'blur(48px)',
-            x: orbOffsets[i].x,
-            y: orbOffsets[i].y,
+            filter: isMobile ? 'blur(24px)' : 'blur(48px)',
+            x: isMobile ? 0 : orbOffsets[i].x,
+            y: isMobile ? 0 : orbOffsets[i].y,
             marginLeft: -(orb.size / 2),
             marginTop: -(orb.size / 2),
           }}
-          animate={{
+          animate={isMobile ? {} : {
             x: [0, 30, -20, 0],
             y: [0, -25, 20, 0],
             scale: [1, 1.08, 0.95, 1],
@@ -101,18 +103,23 @@ export function Hero() {
             <span className="text-gradient">Obert.</span>
           </motion.h1>
 
-          {/* Sous-titre animé */}
+          {/* Sous-titre animé — deux lignes sur mobile pour éviter le layout shift du typewriter */}
           <motion.div
             {...fadeUp(0.7)}
-            className="flex flex-wrap items-center gap-x-3 gap-y-1 mb-7 font-display text-xl md:text-2xl text-zinc-400 font-medium"
+            className="mb-7 font-display text-xl md:text-2xl text-zinc-400 font-medium"
             aria-label={`Développeur Fullstack & ${animatedRole}`}
           >
-            <span>Développeur Fullstack</span>
-            <span className="text-zinc-700" aria-hidden="true">·</span>
-            <span className="text-indigo-400" aria-live="polite">
-              {animatedRole}
-              <span className="inline-block w-px h-[1.1em] bg-indigo-400 ml-0.5 align-middle animate-blink" aria-hidden="true" />
-            </span>
+            {/* Desktop : inline — Mobile : bloc séparé */}
+            <div className="flex flex-col md:flex-row md:items-center md:gap-x-3">
+              <span>Développeur Fullstack</span>
+              <div className="flex items-center gap-x-3 h-8 md:h-auto">
+                <span className="text-zinc-700" aria-hidden="true">·</span>
+                <span className="text-indigo-400 whitespace-nowrap" aria-live="polite">
+                  {animatedRole}
+                  <span className="inline-block w-px h-[1.1em] bg-indigo-400 ml-0.5 align-middle animate-blink" aria-hidden="true" />
+                </span>
+              </div>
+            </div>
           </motion.div>
 
           {/* Description */}

@@ -5,6 +5,7 @@ import { ScrollReveal } from './ui/ScrollReveal'
 import { SectionTitle } from './ui/SectionTitle'
 import { portfolioData } from '../data/portfolio'
 import { ProjectModal } from './ProjectModal'
+import { useIsMobile } from '../hooks/useIsMobile'
 import type { Project, ProjectImage } from '../data/portfolio'
 
 // ─── Mockup SVG Overlays ──────────────────────────────────────────────────────
@@ -251,10 +252,17 @@ function getVariant(idx: number, current: number, total: number) {
 
 const CARD_W = 420
 
-const variants = {
-  center: { x: 0,               rotateY: 0,   z: 0,    scale: 1,    opacity: 1,    filter: 'brightness(1)' },
-  left:   { x: -(CARD_W * 0.8), rotateY: 42,  z: -280, scale: 0.78, opacity: 0.5,  filter: 'brightness(0.45)' },
-  right:  { x:  (CARD_W * 0.8), rotateY: -42, z: -280, scale: 0.78, opacity: 0.5,  filter: 'brightness(0.45)' },
+const variants3D = {
+  center: { x: 0,               rotateY: 0,  z: 0,    scale: 1,    opacity: 1,   filter: 'brightness(1)' },
+  left:   { x: -(CARD_W * 0.8), rotateY: 42, z: -280, scale: 0.78, opacity: 0.5, filter: 'brightness(0.45)' },
+  right:  { x:  (CARD_W * 0.8), rotateY: -42,z: -280, scale: 0.78, opacity: 0.5, filter: 'brightness(0.45)' },
+}
+
+// Mobile : pas de 3D, les cartes hors-focus sont juste cachées hors écran
+const variantsMobile = {
+  center: { x: 0,    rotateY: 0, z: 0, scale: 1, opacity: 1, filter: 'brightness(1)' },
+  left:   { x: -800, rotateY: 0, z: 0, scale: 1, opacity: 0, filter: 'brightness(1)' },
+  right:  { x:  800, rotateY: 0, z: 0, scale: 1, opacity: 0, filter: 'brightness(1)' },
 }
 
 // ─── Main Carousel ────────────────────────────────────────────────────────────
@@ -265,20 +273,19 @@ export function ProjectsCarousel() {
   const [paused, setPaused] = useState(false)
   const [selectedProject, setSelectedProject] = useState<Project | null>(null)
   const prefersReduced = useReducedMotion()
+  const isMobile = useIsMobile()
   const isDragging = useRef(false)
 
   const navigate = useCallback((dir: 1 | -1) => {
     setCurrent((c) => ((c + dir) % total + total) % total)
   }, [total])
 
-  // Auto-advance
   useEffect(() => {
     if (paused || prefersReduced || selectedProject) return
     const id = setInterval(() => navigate(1), 4500)
     return () => clearInterval(id)
   }, [paused, navigate, prefersReduced, selectedProject])
 
-  // Keyboard navigation
   useEffect(() => {
     if (selectedProject) return
     const onKey = (e: KeyboardEvent) => {
@@ -290,7 +297,7 @@ export function ProjectsCarousel() {
   }, [navigate, selectedProject])
 
   const handleDragEnd = (_: unknown, info: { offset: { x: number }; velocity: { x: number } }) => {
-    const threshold = 50
+    const threshold = 40
     if (info.offset.x < -threshold || info.velocity.x < -150) navigate(1)
     else if (info.offset.x > threshold || info.velocity.x > 150) navigate(-1)
     setTimeout(() => { isDragging.current = false }, 50)
@@ -298,13 +305,11 @@ export function ProjectsCarousel() {
 
   const handleCardClick = (project: Project, pos: string) => {
     if (isDragging.current) return
-    if (pos === 'center') {
-      setSelectedProject(project)
-    } else {
-      const idx = portfolioData.projects.findIndex((p) => p.id === project.id)
-      setCurrent(idx)
-    }
+    if (pos === 'center') setSelectedProject(project)
+    else setCurrent(portfolioData.projects.findIndex((p) => p.id === project.id))
   }
+
+  const variants = isMobile ? variantsMobile : variants3D
 
   return (
     <>
@@ -325,11 +330,16 @@ export function ProjectsCarousel() {
           </ScrollReveal>
         </div>
 
-        {/* 3D Stage */}
+        {/* Stage */}
         <ScrollReveal delay={0.1}>
           <motion.div
-            className="relative mx-auto select-none cursor-grab active:cursor-grabbing"
-            style={{ height: '620px', maxWidth: '100vw', perspective: '1400px', perspectiveOrigin: '50% 40%' }}
+            className="relative mx-auto select-none cursor-grab active:cursor-grabbing overflow-hidden"
+            style={{
+              height: isMobile ? 640 : 620,
+              maxWidth: '100vw',
+              perspective: isMobile ? undefined : '1400px',
+              perspectiveOrigin: isMobile ? undefined : '50% 40%',
+            }}
             drag="x"
             dragConstraints={{ left: 0, right: 0 }}
             dragElastic={0.04}
@@ -340,21 +350,19 @@ export function ProjectsCarousel() {
           >
             {portfolioData.projects.map((project, i) => {
               const pos = getVariant(i, current, total)
-              const v = variants[pos]
               const isCenter = pos === 'center'
 
               return (
                 <motion.div
                   key={project.id}
-                  animate={v}
+                  animate={variants[pos]}
                   transition={spring}
                   className="absolute top-0 left-1/2"
                   style={{
-                    width: CARD_W,
-                    marginLeft: -(CARD_W / 2),
+                    width: isMobile ? 'calc(100vw - 2rem)' : CARD_W,
+                    marginLeft: isMobile ? 'calc(-50vw + 1rem)' : -(CARD_W / 2),
                     transformStyle: 'preserve-3d',
                     zIndex: isCenter ? 10 : 5,
-                    cursor: isCenter ? 'pointer' : 'pointer',
                   }}
                   onClick={() => handleCardClick(project, pos)}
                 >
