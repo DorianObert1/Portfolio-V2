@@ -1,0 +1,42 @@
+name: Deploy to VPS
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Install Tailscale and connect
+        run: |
+          curl -fsSL https://tailscale.com/install.sh | sh
+          sudo tailscale up --authkey=${{ secrets.TAILSCALE_AUTHKEY }} --hostname=github-ci-${{ github.run_id }}
+
+      - name: Setup SSH known hosts
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.VPS_SSH_KNOWN_HOSTS }}" >> ~/.ssh/known_hosts
+          chmod 600 ~/.ssh/known_hosts
+
+      - name: Deploy via SSH
+        run: |
+          ssh ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "
+            set -e
+            cd ${{ secrets.VPS_DEPLOY_PATH }}
+
+            git pull origin main
+
+            docker network inspect edge >/dev/null 2>&1 || docker network create edge
+
+            docker compose up -d --build
+
+            echo 'Deploy complete'
+          "
+
+      - name: Logout from Tailscale
+        if: always()
+        run: sudo tailscale logout || true
