@@ -1,0 +1,13 @@
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: portfolio-frontend
+    networks:
+      - edge
+    restart: unless-stopped
+
+networks:
+  edge:
+    external: true
