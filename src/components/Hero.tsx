@@ -13,10 +13,10 @@ const fadeUp = (delay: number) => ({
 })
 
 const ORBS = [
-  { color: 'rgba(99,102,241,0.22)',  size: 640, x: '68%',  y: '-10%', dur: 14 },
-  { color: 'rgba(6,182,212,0.12)',   size: 480, x: '-5%',  y: '80%',  dur: 18 },
-  { color: 'rgba(139,92,246,0.14)',  size: 400, x: '85%',  y: '65%',  dur: 22 },
-  { color: 'rgba(244,114,182,0.07)', size: 300, x: '35%',  y: '40%',  dur: 16 },
+  { color: 'rgba(99,102,241,0.18)',  size: 640, x: '68%',  y: '-10%', dur: 14 },
+  { color: 'rgba(6,182,212,0.10)',   size: 480, x: '-5%',  y: '80%',  dur: 18 },
+  { color: 'rgba(139,92,246,0.12)',  size: 400, x: '85%',  y: '65%',  dur: 22 },
+  { color: 'rgba(244,114,182,0.08)', size: 300, x: '35%',  y: '40%',  dur: 16 },
 ]
 
 export function Hero() {
@@ -47,14 +47,14 @@ export function Hero() {
   return (
     <section
       ref={sectionRef}
-      className="relative min-h-dvh flex flex-col justify-center overflow-hidden"
+      className="relative min-h-dvh flex flex-col justify-center overflow-hidden bg-white"
       aria-label="Introduction"
       onMouseMove={handleMouseMove}
     >
       {/* Grid */}
-      <div className="absolute inset-0 bg-zinc-950 hero-grid" />
+      <div className="absolute inset-0 hero-grid" />
 
-      {/* Animated orbs — static on mobile (blur+animation are GPU-heavy) */}
+      {/* Animated orbs */}
       {ORBS.map((orb, i) => (
         <motion.div
           key={i}
@@ -86,9 +86,9 @@ export function Hero() {
           {/* Badge disponibilité */}
           <motion.div {...fadeUp(0.35)}>
             <MagneticWrapper>
-              <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full border border-emerald-500/25 bg-emerald-500/5 mb-10">
-                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" aria-hidden="true" />
-                <span className="text-emerald-400 text-sm font-mono">{portfolioData.personal.availability}</span>
+              <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full border border-emerald-300 bg-emerald-50 mb-10">
+                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" aria-hidden="true" />
+                <span className="text-emerald-700 text-sm font-mono">{portfolioData.personal.availability}</span>
               </div>
             </MagneticWrapper>
           </motion.div>
@@ -96,38 +96,37 @@ export function Hero() {
           {/* Nom */}
           <motion.h1
             {...fadeUp(0.5)}
-            className="font-display text-[clamp(3.5rem,10vw,7rem)] font-bold leading-[0.95] tracking-tight text-zinc-50 mb-5"
+            className="font-display text-[clamp(3.5rem,10vw,7rem)] font-bold leading-[0.95] tracking-tight text-zinc-900 mb-5"
           >
             Dorian
             <br />
             <span className="text-gradient">Obert.</span>
           </motion.h1>
 
-          {/* Sous-titre animé — deux lignes sur mobile pour éviter le layout shift du typewriter */}
+          {/* Sous-titre */}
           <motion.div
             {...fadeUp(0.7)}
-            className="mb-7 font-display text-xl md:text-2xl text-zinc-400 font-medium"
+            className="mb-7 font-display text-xl md:text-2xl text-zinc-600 font-medium"
             aria-label={`Développeur Fullstack & ${animatedRole}`}
           >
-            {/* Desktop : inline — Mobile : bloc séparé */}
             <div className="flex flex-col md:flex-row md:items-center md:gap-x-3">
               <span>Développeur Fullstack</span>
               <div className="flex items-center gap-x-3 h-8 md:h-auto">
-                <span className="text-zinc-700" aria-hidden="true">·</span>
-                <span className="text-indigo-400 whitespace-nowrap" aria-live="polite">
+                <span className="text-zinc-300" aria-hidden="true">·</span>
+                <span className="text-indigo-600 whitespace-nowrap" aria-live="polite">
                   {animatedRole}
-                  <span className="inline-block w-px h-[1.1em] bg-indigo-400 ml-0.5 align-middle animate-blink" aria-hidden="true" />
+                  <span className="inline-block w-px h-[1.1em] bg-indigo-600 ml-0.5 align-middle animate-blink" aria-hidden="true" />
                 </span>
               </div>
             </div>
           </motion.div>
 
           {/* Description */}
-          <motion.p {...fadeUp(0.85)} className="text-zinc-400 text-lg md:text-xl max-w-2xl leading-relaxed mb-10">
+          <motion.p {...fadeUp(0.85)} className="text-zinc-600 text-lg md:text-xl max-w-2xl leading-relaxed mb-10">
             4+ ans à construire des logiciels de production pour des entreprises de premier plan.
             Des simulateurs embarqués chez{' '}
-            <span className="text-zinc-200 font-medium">Alstom</span> aux plateformes B2B mondiales chez{' '}
-            <span className="text-zinc-200 font-medium">Vallourec</span> —{' '}
+            <span className="text-zinc-900 font-semibold">Alstom</span> aux plateformes B2B mondiales chez{' '}
+            <span className="text-zinc-900 font-semibold">Vallourec</span> —{' '}
             je construis des solutions qui passent à l&apos;échelle.
           </motion.p>
 
@@ -136,7 +135,7 @@ export function Hero() {
             <MagneticWrapper>
               <a
                 href="#projects"
-                className="px-7 py-3.5 rounded-xl bg-indigo-500 hover:bg-indigo-400 text-white font-semibold text-sm transition-all duration-200 hover:shadow-xl hover:shadow-indigo-500/30 hover:-translate-y-0.5 inline-block"
+                className="px-7 py-3.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-sm transition-all duration-200 hover:shadow-xl hover:shadow-indigo-500/30 hover:-translate-y-0.5 inline-block"
               >
                 Voir les projets →
               </a>
@@ -145,7 +144,7 @@ export function Hero() {
               <a
                 href={portfolioData.personal.cvUrl}
                 download
-                className="flex items-center gap-2 px-7 py-3.5 rounded-xl border border-zinc-700 hover:border-zinc-500 text-zinc-300 hover:text-zinc-50 font-semibold text-sm transition-all duration-200 hover:-translate-y-0.5"
+                className="flex items-center gap-2 px-7 py-3.5 rounded-xl border border-zinc-300 hover:border-zinc-500 text-zinc-700 hover:text-zinc-900 font-semibold text-sm transition-all duration-200 hover:-translate-y-0.5"
               >
                 <Download size={15} />
                 Télécharger le CV
@@ -165,7 +164,7 @@ export function Hero() {
                   href={href}
                   target={href.startsWith('http') ? '_blank' : undefined}
                   rel={href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                  className="flex items-center gap-2 text-zinc-600 hover:text-zinc-300 transition-colors duration-200 text-sm"
+                  className="flex items-center gap-2 text-zinc-500 hover:text-zinc-800 transition-colors duration-200 text-sm"
                   aria-label={label}
                 >
                   <Icon size={18} />
@@ -182,7 +181,7 @@ export function Hero() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 2.4, duration: 0.8 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-zinc-700"
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-zinc-400"
         aria-hidden="true"
       >
         <span className="text-[10px] font-mono tracking-[0.3em] uppercase">Défiler</span>
