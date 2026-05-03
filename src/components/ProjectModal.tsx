@@ -42,10 +42,7 @@ function ImageGallery({ images, accent }: { images: ProjectImage[]; accent: stri
   return (
     <div className="flex flex-col gap-3">
       {/* Main image — natural height, no dead space */}
-      <div
-        className="relative rounded-xl overflow-hidden"
-        style={{ background: `linear-gradient(135deg, ${img.gradientFrom} 0%, ${img.gradientVia} 50%, ${img.gradientTo} 100%)` }}
-      >
+      <div className="relative rounded-xl overflow-hidden bg-zinc-100">
         <AnimatePresence mode="wait">
           <motion.div
             key={idx}
@@ -53,6 +50,7 @@ function ImageGallery({ images, accent }: { images: ProjectImage[]; accent: stri
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.28 }}
+            style={{ background: `linear-gradient(135deg, ${img.gradientFrom} 0%, ${img.gradientVia} 50%, ${img.gradientTo} 100%)` }}
           >
             {img.src && (
               <img
@@ -162,7 +160,7 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-50 bg-black/85 backdrop-blur-md"
+            className="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm"
             onClick={onClose}
           />
 
@@ -173,10 +171,10 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.96, y: 16 }}
             transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-            className="fixed z-50 inset-4 md:inset-[3vh_3vw] flex flex-col rounded-2xl overflow-hidden border bg-zinc-950"
+            className="fixed z-50 inset-4 md:inset-[3vh_3vw] flex flex-col rounded-2xl overflow-hidden border border-zinc-200 bg-white"
             style={{
               borderColor: `${project.accentColor}30`,
-              boxShadow: `0 0 80px ${project.accentColor}18, 0 40px 120px rgba(0,0,0,0.8)`,
+              boxShadow: `0 0 60px ${project.accentColor}14, 0 20px 60px rgba(0,0,0,0.15)`,
               maxWidth: 1280,
               maxHeight: '94vh',
               margin: 'auto',
@@ -186,7 +184,7 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
             {/* ── Header ── */}
             <div
               className="flex items-center justify-between px-6 py-3.5 border-b shrink-0"
-              style={{ borderColor: `${project.accentColor}18`, background: 'rgba(0,0,0,0.3)' }}
+              style={{ borderColor: `${project.accentColor}18`, background: 'rgba(255,255,255,0.95)' }}
             >
               <div className="flex items-center gap-3">
                 <span
@@ -195,8 +193,8 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
                 >
                   {project.type}
                 </span>
-                <h2 className="font-display text-lg font-bold text-zinc-50 tracking-tight">{project.name}</h2>
-                <span className="text-sm text-zinc-600 hidden sm:block">— {project.tagline}</span>
+                <h2 className="font-display text-lg font-bold text-zinc-900 tracking-tight">{project.name}</h2>
+                <span className="text-sm text-zinc-500 hidden sm:block">— {project.tagline}</span>
               </div>
 
               <div className="flex items-center gap-2">
@@ -204,13 +202,13 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
                   href={project.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-1.5 text-xs font-mono px-3 py-1.5 rounded-lg border border-zinc-700 text-zinc-400 hover:text-zinc-50 hover:border-zinc-500 transition-colors duration-200"
+                  className="flex items-center gap-1.5 text-xs font-mono px-3 py-1.5 rounded-lg border border-zinc-200 text-zinc-600 hover:text-zinc-900 hover:border-zinc-400 transition-colors duration-200"
                 >
                   Voir le site <ExternalLink size={11} />
                 </a>
                 <button
                   onClick={onClose}
-                  className="w-8 h-8 flex items-center justify-center rounded-lg border border-zinc-800 text-zinc-500 hover:text-zinc-100 hover:border-zinc-600 transition-colors duration-200"
+                  className="w-8 h-8 flex items-center justify-center rounded-lg border border-zinc-200 text-zinc-500 hover:text-zinc-900 hover:border-zinc-400 transition-colors duration-200"
                   aria-label="Fermer"
                 >
                   <X size={15} />
@@ -222,13 +220,13 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
             <div className="flex flex-col md:flex-row flex-1 min-h-0 overflow-hidden">
 
               {/* Left — image gallery : hauteur fixe sur mobile pour rester visible */}
-              <div className="h-[42vh] shrink-0 md:h-auto md:flex-1 md:min-w-0 p-4 md:p-5 overflow-y-auto">
+              <div className="h-[42vh] shrink-0 md:h-auto md:flex-1 md:min-w-0 p-4 md:p-5 overflow-y-auto bg-white">
                 <ImageGallery images={project.images} accent={project.accentColor} />
               </div>
 
               {/* Right — project details */}
               <div
-                className="flex-1 md:flex-none md:w-80 lg:w-96 flex flex-col overflow-y-auto border-t md:border-t-0 md:border-l"
+                className="flex-1 md:flex-none md:w-80 lg:w-96 flex flex-col overflow-y-auto border-t md:border-t-0 md:border-l bg-white"
                 style={{ borderColor: `${project.accentColor}12` }}
               >
                 <div className="p-6 flex flex-col gap-6">
@@ -238,7 +236,7 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
                     <p className="text-sm font-semibold mb-2" style={{ color: project.accentColor }}>
                       {project.tagline}
                     </p>
-                    <p className="text-sm text-zinc-400 leading-relaxed">{project.description}</p>
+                    <p className="text-sm text-zinc-600 leading-relaxed">{project.description}</p>
                   </div>
 
                   {/* Highlights */}
@@ -246,7 +244,7 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
                     <p className="text-[11px] font-mono text-zinc-600 uppercase tracking-widest mb-3">Points clés</p>
                     <ul className="space-y-2.5">
                       {project.highlights.map((h, i) => (
-                        <li key={i} className="flex items-start gap-2.5 text-sm text-zinc-300">
+                        <li key={i} className="flex items-start gap-2.5 text-sm text-zinc-600">
                           <span
                             className="w-1.5 h-1.5 rounded-full shrink-0 mt-[5px]"
                             style={{ backgroundColor: `${project.accentColor}90` }}

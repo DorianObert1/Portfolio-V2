@@ -23,7 +23,7 @@ export function Skills() {
   const accent = ACCENTS[active]
 
   return (
-    <section id="skills" className="py-24 md:py-36 bg-zinc-950" aria-labelledby="skills-title">
+    <section id="skills" className="py-24 md:py-36 bg-zinc-50" aria-labelledby="skills-title">
       <div className="max-w-6xl mx-auto px-6">
         <ScrollReveal>
           <SectionTitle
@@ -48,8 +48,9 @@ export function Skills() {
                     onClick={() => setActive(i)}
                     className="relative flex items-center gap-3 px-4 py-3.5 rounded-xl text-left transition-all duration-200 shrink-0 lg:shrink lg:w-full group"
                     style={{
-                      background: isActive ? `${color}10` : 'transparent',
-                      border: `1px solid ${isActive ? `${color}30` : 'rgba(63,63,70,0.5)'}`,
+                      background: isActive ? `${color}12` : 'rgba(255,255,255,0.9)',
+                      border: `1px solid ${isActive ? `${color}40` : 'rgba(0,0,0,0.10)'}`,
+                      boxShadow: isActive ? `0 2px 12px ${color}18` : 'none',
                     }}
                     aria-pressed={isActive}
                     aria-label={g.category}
@@ -68,22 +69,22 @@ export function Skills() {
                     <div
                       className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0 transition-all duration-200"
                       style={{
-                        background: isActive ? `${color}20` : 'rgba(39,39,42,0.6)',
-                        border: `1px solid ${isActive ? `${color}40` : 'rgba(63,63,70,0.4)'}`,
+                        background: isActive ? `${color}15` : 'rgba(0,0,0,0.05)',
+                        border: `1px solid ${isActive ? `${color}35` : 'rgba(0,0,0,0.10)'}`,
                       }}
                     >
-                      <Icon size={14} style={{ color: isActive ? color : 'rgba(161,161,170,0.6)' }} />
+                      <Icon size={14} style={{ color: isActive ? color : '#71717a' }} />
                     </div>
 
                     {/* Label */}
                     <div className="min-w-0">
                       <p
                         className="text-sm font-medium leading-tight truncate transition-colors duration-200"
-                        style={{ color: isActive ? 'rgba(244,244,245,1)' : 'rgba(113,113,122,1)' }}
+                        style={{ color: isActive ? '#09090b' : '#3f3f46' }}
                       >
                         {g.category}
                       </p>
-                      <p className="text-[10px] font-mono mt-0.5" style={{ color: isActive ? color : 'rgba(82,82,91,1)' }}>
+                      <p className="text-[10px] font-mono mt-0.5" style={{ color: isActive ? color : '#71717a' }}>
                         {g.items.length} techs
                       </p>
                     </div>
@@ -95,7 +96,7 @@ export function Skills() {
             {/* ── Skills panel (right) ─────────────────────────── */}
             <div
               className="relative flex-1 rounded-2xl overflow-hidden"
-              style={{ border: `1px solid ${accent}20`, background: 'rgba(9,9,11,0.6)' }}
+              style={{ border: `1px solid ${accent}35`, background: `linear-gradient(135deg, ${accent}08 0%, rgba(255,255,255,1) 100%)`, boxShadow: `0 4px 24px ${accent}12` }}
             >
               {/* Background glow */}
               <div
@@ -130,7 +131,7 @@ export function Skills() {
                       >
                         {(() => { const Icon = ICONS[active]; return <Icon size={15} style={{ color: accent }} /> })()}
                       </div>
-                      <h3 className="font-display font-bold text-zinc-100 text-lg">{group.category}</h3>
+                      <h3 className="font-display font-bold text-zinc-900 text-lg">{group.category}</h3>
                     </div>
                     <span className="font-mono text-xs px-2.5 py-1 rounded-full" style={{ color: accent, background: `${accent}12`, border: `1px solid ${accent}25` }}>
                       {group.items.length} techs
@@ -153,8 +154,8 @@ export function Skills() {
                         transition={{ duration: 0.2, delay: i * 0.04, ease: 'easeOut' }}
                         className="group relative flex flex-col justify-between p-3.5 rounded-xl cursor-default overflow-hidden"
                         style={{
-                          background: 'rgba(24,24,27,0.8)',
-                          border: '1px solid rgba(63,63,70,0.5)',
+                          background: `rgba(255,255,255,0.9)`,
+                          border: `1px solid ${accent}25`,
                         }}
                         whileHover={{ y: -2, transition: { duration: 0.15 } }}
                         onHoverStart={(e) => {
@@ -167,8 +168,8 @@ export function Skills() {
                         onHoverEnd={(e) => {
                           const el = (e.target as HTMLElement).closest('[role="listitem"]') as HTMLElement
                           if (el) {
-                            el.style.background = 'rgba(24,24,27,0.8)'
-                            el.style.borderColor = 'rgba(63,63,70,0.5)'
+                            el.style.background = `${accent}10`
+                            el.style.borderColor = `${accent}40`
                           }
                         }}
                       >
@@ -186,7 +187,7 @@ export function Skills() {
                           </p>
                         </div>
                         {/* Skill name */}
-                        <p className="font-display font-semibold text-sm text-zinc-300 group-hover:text-zinc-100 transition-colors duration-200 leading-snug">
+                        <p className="font-display font-semibold text-sm text-zinc-800 group-hover:text-zinc-900 transition-colors duration-200 leading-snug">
                           {skill}
                         </p>
                         {/* Bottom accent line */}

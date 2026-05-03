@@ -18,7 +18,7 @@ export function LoadingScreen({ onComplete }: { onComplete: () => void }) {
       {phase !== 'exit' ? (
         <motion.div
           key="loader"
-          className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-zinc-950"
+          className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-white"
           exit={{ opacity: 0, scale: 1.04 }}
           transition={{ duration: 0.55, ease: [0.76, 0, 0.24, 1] }}
         >
@@ -38,7 +38,7 @@ export function LoadingScreen({ onComplete }: { onComplete: () => void }) {
             {NAME.split('').map((char, i) => (
               <motion.span
                 key={i}
-                className="font-display font-black text-zinc-50 select-none"
+                className="font-display font-black text-zinc-900 select-none"
                 style={{ fontSize: 'clamp(2.5rem, 7vw, 5rem)', letterSpacing: '-0.02em', display: char === ' ' ? 'block' : undefined, width: char === ' ' ? '0.5em' : undefined }}
                 initial={{ opacity: 0, y: 40, filter: 'blur(12px)' }}
                 animate={phase !== 'enter' ? { opacity: 1, y: 0, filter: 'blur(0px)' } : {}}
@@ -52,7 +52,7 @@ export function LoadingScreen({ onComplete }: { onComplete: () => void }) {
           {/* Underline */}
           <motion.div
             className="relative mt-4 h-px rounded-full overflow-hidden"
-            style={{ width: 'clamp(200px, 40vw, 380px)', background: 'rgba(99,102,241,0.15)' }}
+            style={{ width: 'clamp(200px, 40vw, 380px)', background: 'rgba(99,102,241,0.12)' }}
             initial={{ scaleX: 0 }}
             animate={phase !== 'enter' ? { scaleX: 1 } : {}}
             transition={{ duration: 0.7, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
@@ -67,7 +67,7 @@ export function LoadingScreen({ onComplete }: { onComplete: () => void }) {
 
           {/* Role subtitle */}
           <motion.p
-            className="mt-5 font-mono text-xs tracking-[0.35em] uppercase text-zinc-600"
+            className="mt-5 font-mono text-xs tracking-[0.35em] uppercase text-zinc-500"
             initial={{ opacity: 0 }}
             animate={phase !== 'enter' ? { opacity: 1 } : {}}
             transition={{ duration: 0.5, delay: 0.85 }}

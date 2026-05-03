@@ -32,7 +32,6 @@ export function Navbar() {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
-  // Active section detection
   useEffect(() => {
     const ids = navLinks.map((l) => l.href.slice(1))
 
@@ -60,18 +59,16 @@ export function Navbar() {
       transition={{ duration: 0.7, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
       className={`fixed top-0 inset-x-0 z-50 transition-all duration-500 ${
         scrolled
-          ? 'bg-zinc-950/75 backdrop-blur-2xl shadow-xl shadow-zinc-950/20'
+          ? 'bg-white/90 backdrop-blur-2xl shadow-sm shadow-zinc-200/60'
           : 'bg-transparent'
       }`}
       role="banner"
     >
-      {/* Separator — always in DOM, opacity transition only (évite le flash du border-b) */}
       <div
-        className="absolute bottom-0 left-0 right-0 h-px bg-zinc-800/60 transition-opacity duration-500 pointer-events-none"
+        className="absolute bottom-0 left-0 right-0 h-px bg-zinc-200 transition-opacity duration-500 pointer-events-none"
         style={{ opacity: scrolled ? 1 : 0 }}
       />
 
-      {/* Progress bar — par-dessus le separator */}
       <div
         ref={progressRef}
         className="absolute bottom-0 left-0 right-0 h-px origin-left opacity-0 pointer-events-none"
@@ -86,16 +83,14 @@ export function Navbar() {
         className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between"
         aria-label="Main navigation"
       >
-        {/* Logo */}
         <a
           href="#"
-          className="font-display font-bold text-xl bg-gradient-to-r from-indigo-400 to-cyan-400 bg-clip-text text-transparent hover:opacity-80 transition-opacity"
+          className="font-display font-bold text-xl bg-gradient-to-r from-indigo-600 to-cyan-600 bg-clip-text text-transparent hover:opacity-80 transition-opacity"
           aria-label="Dorian Obert — Home"
         >
           DO.
         </a>
 
-        {/* Desktop links */}
         <ul className="hidden md:flex items-center gap-1" role="list">
           {navLinks.map((link) => {
             const isActive = activeSection === link.href.slice(1)
@@ -104,13 +99,13 @@ export function Navbar() {
                 <a
                   href={link.href}
                   className={`relative px-4 py-2 text-sm rounded-lg transition-all duration-200 font-medium ${
-                    isActive ? 'text-zinc-50' : 'text-zinc-500 hover:text-zinc-200'
+                    isActive ? 'text-zinc-900' : 'text-zinc-600 hover:text-zinc-900'
                   }`}
                 >
                   {isActive && (
                     <motion.span
                       layoutId="nav-pill"
-                      className="absolute inset-0 rounded-lg bg-zinc-800"
+                      className="absolute inset-0 rounded-lg bg-zinc-100"
                       transition={{ type: 'spring', stiffness: 380, damping: 30 }}
                     />
                   )}
@@ -121,19 +116,17 @@ export function Navbar() {
           })}
         </ul>
 
-        {/* CTA */}
         <div className="hidden md:flex">
           <a
             href="mailto:dorian.obert@icloud.com"
-            className="px-5 py-2 rounded-xl bg-indigo-500 hover:bg-indigo-400 text-white text-sm font-semibold transition-all duration-200 hover:shadow-lg hover:shadow-indigo-500/30 hover:-translate-y-px"
+            className="px-5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-semibold transition-all duration-200 hover:shadow-lg hover:shadow-indigo-500/25 hover:-translate-y-px"
           >
             Me contacter →
           </a>
         </div>
 
-        {/* Mobile toggle */}
         <button
-          className="md:hidden w-10 h-10 flex items-center justify-center rounded-xl text-zinc-400 hover:text-zinc-50 hover:bg-zinc-800/50 transition-all"
+          className="md:hidden w-10 h-10 flex items-center justify-center rounded-xl text-zinc-600 hover:text-zinc-900 hover:bg-zinc-100 transition-all"
           onClick={() => setMobileOpen(!mobileOpen)}
           aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
           aria-expanded={mobileOpen}
@@ -142,7 +135,6 @@ export function Navbar() {
         </button>
       </nav>
 
-      {/* Mobile menu */}
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
@@ -150,14 +142,14 @@ export function Navbar() {
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.25, ease: 'easeInOut' }}
-            className="md:hidden overflow-hidden bg-zinc-950/90 backdrop-blur-2xl border-b border-zinc-800/60"
+            className="md:hidden overflow-hidden bg-white/95 backdrop-blur-2xl border-b border-zinc-200"
           >
             <ul className="max-w-6xl mx-auto px-6 py-4 flex flex-col gap-1" role="list">
               {navLinks.map((link) => (
                 <li key={link.href}>
                   <a
                     href={link.href}
-                    className="block px-4 py-3 text-sm text-zinc-400 hover:text-zinc-50 hover:bg-zinc-800/50 rounded-xl transition-all font-medium"
+                    className="block px-4 py-3 text-sm text-zinc-700 hover:text-zinc-900 hover:bg-zinc-100 rounded-xl transition-all font-medium"
                     onClick={() => setMobileOpen(false)}
                   >
                     {link.label}
@@ -167,7 +159,7 @@ export function Navbar() {
               <li className="pt-2">
                 <a
                   href="mailto:dorian.obert@icloud.com"
-                  className="block px-4 py-3 rounded-xl bg-indigo-500 text-white text-sm font-semibold text-center"
+                  className="block px-4 py-3 rounded-xl bg-indigo-600 text-white text-sm font-semibold text-center"
                   onClick={() => setMobileOpen(false)}
                 >
                   Me contacter →

@@ -68,14 +68,14 @@ function EduCard({ edu, i }: { edu: EduType; i: number }) {
               padding: 1,
               background: isActive
                 ? `linear-gradient(135deg, ${accent}60 0%, ${accent}20 40%, transparent 60%)`
-                : `linear-gradient(135deg, ${accent}30 0%, transparent 60%)`,
+                : `linear-gradient(135deg, ${accent}50 0%, transparent 60%)`,
             }}
           />
 
           {/* ── Card background ── */}
           <div
             className="absolute inset-[1px] rounded-2xl pointer-events-none"
-            style={{ background: 'rgba(9,9,11,0.95)' }}
+            style={{ background: `linear-gradient(160deg, ${accent}0C 0%, rgba(255,255,255,1) 55%)` }}
           />
 
           {/* ── Ambient gradient ── */}
@@ -127,9 +127,9 @@ function EduCard({ edu, i }: { edu: EduType; i: number }) {
               <div
                 className="w-12 h-12 rounded-2xl flex items-center justify-center shrink-0"
                 style={{
-                  background: `${accent}12`,
+                  background: `${accent}0E`,
                   border: `1px solid ${accent}30`,
-                  boxShadow: `0 0 20px ${accent}18`,
+                  boxShadow: `0 0 16px ${accent}14`,
                 }}
               >
                 <Icon size={20} style={{ color: accent }} />
@@ -140,9 +140,9 @@ function EduCard({ edu, i }: { edu: EduType; i: number }) {
                 <span
                   className="flex items-center gap-1.5 text-[10px] font-mono px-2.5 py-1 rounded-full"
                   style={{
-                    color: isActive ? accent : 'rgba(161,161,170,0.8)',
-                    background: isActive ? `${accent}12` : 'rgba(39,39,42,0.6)',
-                    border: `1px solid ${isActive ? `${accent}30` : 'rgba(63,63,70,0.5)'}`,
+                    color: isActive ? accent : '#52525b',
+                    background: isActive ? `${accent}10` : 'rgba(0,0,0,0.05)',
+                    border: `1px solid ${isActive ? `${accent}30` : 'rgba(0,0,0,0.10)'}`,
                   }}
                 >
                   {isActive && (
@@ -157,7 +157,7 @@ function EduCard({ edu, i }: { edu: EduType; i: number }) {
                 </span>
                 <span
                   className="font-mono text-[10px] px-2 py-0.5 rounded-md"
-                  style={{ color: `${accent}90`, background: `${accent}0A`, border: `1px solid ${accent}18` }}
+                  style={{ color: accent, background: `${accent}0D`, border: `1px solid ${accent}25` }}
                 >
                   {level}
                 </span>
@@ -165,12 +165,12 @@ function EduCard({ edu, i }: { edu: EduType; i: number }) {
             </div>
 
             {/* Period */}
-            <p className="font-mono text-xs mb-3" style={{ color: `${accent}80` }}>
+            <p className="font-mono text-xs mb-3" style={{ color: accent }}>
               {edu.period}
             </p>
 
             {/* Degree */}
-            <h3 className="font-display font-bold text-zinc-50 leading-snug mb-1.5" style={{ fontSize: 'clamp(15px, 2vw, 18px)' }}>
+            <h3 className="font-display font-bold text-zinc-900 leading-snug mb-1.5" style={{ fontSize: 'clamp(15px, 2vw, 18px)' }}>
               {edu.degree.split('—')[0].trim()}
             </h3>
 
@@ -186,7 +186,7 @@ function EduCard({ edu, i }: { edu: EduType; i: number }) {
             />
 
             {/* Description */}
-            <p className="text-zinc-500 text-sm leading-relaxed flex-1">
+            <p className="text-zinc-600 text-sm leading-relaxed flex-1">
               {edu.description}
             </p>
 
@@ -197,7 +197,7 @@ function EduCard({ edu, i }: { edu: EduType; i: number }) {
                   <span className="font-mono text-[10px] text-zinc-600">Progression</span>
                   <span className="font-mono text-[10px]" style={{ color: accent }}>En cours</span>
                 </div>
-                <div className="h-1 rounded-full bg-zinc-800 overflow-hidden">
+                <div className="h-1 rounded-full bg-zinc-200 overflow-hidden">
                   <motion.div
                     className="h-full rounded-full"
                     style={{ background: `linear-gradient(90deg, ${accent}, ${accent}80)` }}
@@ -218,7 +218,7 @@ function EduCard({ edu, i }: { edu: EduType; i: number }) {
 
 export function Education() {
   return (
-    <section id="education" className="py-24 md:py-36 bg-zinc-950" aria-labelledby="education-title">
+    <section id="education" className="py-24 md:py-36 bg-zinc-50" aria-labelledby="education-title">
       <div className="max-w-6xl mx-auto px-6">
         <ScrollReveal>
           <SectionTitle

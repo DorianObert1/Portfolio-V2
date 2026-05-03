@@ -216,7 +216,7 @@ function MiniImageCarousel({ images, isActive, accentColor }: { images: ProjectI
   }, [isActive, images.length])
 
   return (
-    <div className="relative w-full h-44 rounded-t-2xl overflow-hidden bg-zinc-900">
+    <div className="relative w-full h-44 rounded-t-2xl overflow-hidden bg-zinc-100">
       <AnimatePresence mode="wait">
         <motion.div key={idx} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.45 }} className="absolute inset-0">
           <ProjectImageSlide image={images[idx]} />
@@ -315,7 +315,7 @@ export function ProjectsCarousel() {
     <>
       <section
         id="projects"
-        className="py-24 md:py-36 bg-zinc-950 overflow-hidden"
+        className="py-24 md:py-36 bg-white overflow-hidden"
         aria-labelledby="projects-title"
         onMouseEnter={() => setPaused(true)}
         onMouseLeave={() => setPaused(false)}
@@ -384,7 +384,7 @@ export function ProjectsCarousel() {
               onClick={() => navigate(-1)}
               whileHover={{ scale: 1.08 }}
               whileTap={{ scale: 0.94 }}
-              className="w-11 h-11 flex items-center justify-center rounded-full border border-zinc-700 bg-zinc-900/60 text-zinc-400 hover:text-zinc-50 hover:border-zinc-500 transition-colors duration-200"
+              className="w-11 h-11 flex items-center justify-center rounded-full border border-zinc-200 bg-white text-zinc-600 hover:text-zinc-900 hover:border-zinc-400 transition-colors duration-200"
               aria-label="Projet précédent"
             >
               <ChevronLeft size={18} />
@@ -403,7 +403,7 @@ export function ProjectsCarousel() {
                     width: i === current ? 28 : 8,
                     height: 8,
                     borderRadius: 4,
-                    backgroundColor: i === current ? portfolioData.projects[current].accentColor : 'rgba(255,255,255,0.12)',
+                    backgroundColor: i === current ? portfolioData.projects[current].accentColor : 'rgba(0,0,0,0.15)',
                   }}
                 />
               ))}
@@ -413,7 +413,7 @@ export function ProjectsCarousel() {
               onClick={() => navigate(1)}
               whileHover={{ scale: 1.08 }}
               whileTap={{ scale: 0.94 }}
-              className="w-11 h-11 flex items-center justify-center rounded-full border border-zinc-700 bg-zinc-900/60 text-zinc-400 hover:text-zinc-50 hover:border-zinc-500 transition-colors duration-200"
+              className="w-11 h-11 flex items-center justify-center rounded-full border border-zinc-200 bg-white text-zinc-600 hover:text-zinc-900 hover:border-zinc-400 transition-colors duration-200"
               aria-label="Projet suivant"
             >
               <ChevronRight size={18} />
@@ -421,7 +421,7 @@ export function ProjectsCarousel() {
           </div>
 
           {/* Hint keyboard */}
-          <p className="text-center text-zinc-700 text-xs font-mono mt-3 tracking-wide">
+          <p className="text-center text-zinc-500 text-xs font-mono mt-3 tracking-wide">
             ← → pour naviguer · cliquer pour voir le détail
           </p>
         </ScrollReveal>
@@ -450,12 +450,12 @@ function ProjectCard3D({
       initial={false}
       animate={{
         boxShadow: isActive
-          ? `0 0 60px ${accent}22, 0 40px 80px rgba(0,0,0,0.6)`
-          : '0 20px 40px rgba(0,0,0,0.4)',
+          ? `0 0 40px ${accent}20, 0 20px 60px rgba(0,0,0,0.12)`
+          : '0 4px 24px rgba(0,0,0,0.08)',
       }}
       transition={{ duration: 0.4 }}
-      className="w-full rounded-2xl border border-zinc-800 bg-zinc-900 overflow-hidden flex flex-col group"
-      style={{ borderColor: isActive ? `${accent}30` : undefined }}
+      className="w-full rounded-2xl overflow-hidden flex flex-col group bg-white"
+      style={{ border: isActive ? `1px solid ${accent}35` : '1px solid rgba(0,0,0,0.08)' }}
       aria-label={`${project.name} — ${project.tagline}`}
     >
       {/* Image carousel */}
@@ -493,21 +493,21 @@ function ProjectCard3D({
             target="_blank"
             rel="noopener noreferrer"
             onClick={(e) => e.stopPropagation()}
-            className="flex items-center gap-1.5 text-zinc-500 hover:text-zinc-200 text-xs font-mono transition-colors duration-200"
+            className="flex items-center gap-1.5 text-zinc-500 hover:text-zinc-900 text-xs font-mono transition-colors duration-200"
             aria-label={`Voir ${project.name}`}
           >
             Voir le site <ExternalLink size={12} />
           </a>
         </div>
 
-        <h3 className="font-display text-xl font-bold text-zinc-50 mb-0.5">{project.name}</h3>
+        <h3 className="font-display text-xl font-bold text-zinc-900 mb-0.5">{project.name}</h3>
         <p className="text-sm font-medium mb-3" style={{ color: accent }}>{project.tagline}</p>
-        <p className="text-zinc-500 text-sm leading-relaxed mb-4 line-clamp-2">{project.description}</p>
+        <p className="text-zinc-600 text-sm leading-relaxed mb-4 line-clamp-2">{project.description}</p>
 
         <ul className="space-y-1.5 mb-5">
           {project.highlights.map((h, i) => (
-            <li key={i} className="flex items-center gap-2.5 text-xs text-zinc-500">
-              <span className="w-1.5 h-1.5 rounded-full shrink-0" style={{ backgroundColor: `${accent}90` }} aria-hidden="true" />
+            <li key={i} className="flex items-center gap-2.5 text-xs text-zinc-600">
+              <span className="w-1.5 h-1.5 rounded-full shrink-0" style={{ backgroundColor: accent }} aria-hidden="true" />
               {h}
             </li>
           ))}
@@ -515,12 +515,13 @@ function ProjectCard3D({
 
         <div className="flex flex-wrap gap-1.5 mt-auto" aria-label="Stack technique">
           {project.stack.slice(0, 6).map((tech) => (
-            <span key={tech} className="px-2 py-0.5 rounded-md bg-zinc-800/80 text-zinc-500 text-xs font-mono border border-zinc-700/40">
+            <span key={tech} className="px-2 py-0.5 rounded-md text-zinc-600 text-xs font-mono"
+              style={{ background: `${accent}0A`, border: `1px solid ${accent}25` }}>
               {tech}
             </span>
           ))}
           {project.stack.length > 6 && (
-            <span className="px-2 py-0.5 rounded-md bg-zinc-800/50 text-zinc-700 text-xs font-mono border border-zinc-800">
+            <span className="px-2 py-0.5 rounded-md bg-zinc-100 text-zinc-500 text-xs font-mono border border-zinc-200">
               +{project.stack.length - 6}
             </span>
           )}
