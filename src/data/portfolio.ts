@@ -70,7 +70,7 @@ export const portfolioData = {
     location: 'Lille, France',
     email: 'dorian.obert@icloud.com',
     linkedin: 'https://linkedin.com/in/dorian-obert',
-    github: 'https://github.com/dorianobert',
+    github: 'https://github.com/dorianobert1',
     website: 'https://dorianobert.fr',
     availability: 'Disponible · CDI Fullstack / DevOps · Octobre 2026',
     cvUrl: '/CV_Dorian_Obert_Final.pdf',
